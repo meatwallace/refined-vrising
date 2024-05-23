@@ -4,6 +4,7 @@ using ProjectM;
 using ProjectM.Network;
 using Refined.Utils;
 using Unity.Transforms;
+using static Refined.Commands.PlayerCommands;
 
 namespace Refined.Services;
 internal class AnnouncerService
@@ -25,6 +26,8 @@ internal class AnnouncerService
 
 		// when the killer is this many levels above the victim, treat it as a grief kill
 		var GRIEF_KILL_THRESHOLD = 10;
+
+		Core.Logger.LogInfo($"Player {killerName} ({killerLevel}) killed player {victimName} ({victimLevel})");
 
 		if (killerLevel - victimLevel > GRIEF_KILL_THRESHOLD)
 		{

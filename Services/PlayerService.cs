@@ -64,7 +64,7 @@ internal class PlayerService
 
 		des.RenameUser(fromCharacter, renameEvent);
 		UpdatePlayerCache(userEntity, userData.CharacterName.ToString(), newName.ToString());
-
+		
 		Core.Logger.LogInfo($"Player {userData.CharacterName} renamed to {newName}");
 
 		return true;

@@ -48,15 +48,10 @@ internal class BossService
 			WriteIndented = true
 		};
 
-
-		Core.Logger.LogInfo("pre read");
 		var bossFile = JsonSerializer.Deserialize<BossFile>(File.ReadAllText(BOSS_PATH), options);
 
-		Core.Logger.LogInfo("add range");
 		lockedBosses.AddRange(bossFile.LockedBosses);
 
-
-		Core.Logger.LogInfo("removing bosses");
 		foreach (var boss in lockedBosses)
 		{
 			RemoveBoss(boss);
@@ -144,13 +139,11 @@ internal class FoundVBloodJsonConverter : JsonConverter<FoundVBlood>
 {
 	public override FoundVBlood Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
-		Core.Logger.LogInfo("read");
 		if (reader.TokenType != JsonTokenType.String)
 		{
 			throw new JsonException();
 		}
 
-		Core.Logger.LogInfo("parse");
 		if (FoundVBloodConverter.Parse(reader.GetString(), out var foundVBlood))
 		{
 			return foundVBlood;
