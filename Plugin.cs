@@ -27,16 +27,8 @@ public partial class Plugin : BasePlugin
 		_harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
 		_harmony.PatchAll(System.Reflection.Assembly.GetExecutingAssembly());
 
-		// explicitly register VCF converters & commands so we don't register the default '.help' command. not sure if this works.
-		CommandRegistry.UnregisterAssembly();
-		CommandRegistry.RegisterConverter(typeof(FoundPlayerConverter));
-		CommandRegistry.RegisterConverter(typeof(FoundRegionConverter));
-		CommandRegistry.RegisterConverter(typeof(FoundVBloodConverter));
-		CommandRegistry.RegisterCommandType(typeof(BossCommands));
-		CommandRegistry.RegisterCommandType(typeof(MiscCommands));
-		CommandRegistry.RegisterCommandType(typeof(PlayerCommands));
-		CommandRegistry.RegisterCommandType(typeof(RegionCommands));
-		CommandRegistry.RegisterCommandType(typeof(StashCommands));
+		// Register all VCF commands
+		CommandRegistry.RegisterAll();
 	}
 
 	public override bool Unload()
