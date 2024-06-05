@@ -8,6 +8,8 @@ This is not intended for general usage. It is an extremely simplified and stream
 
 * Simple PvP kill feed
 * Quick Soul Shard decay rate (4 hours)
+* Blood bound helmets
+* `.stash` command
 * Admin commands to manage gated progression & misc tasks unavailable in default game
   * Boss (un)locking
   * Region (un)locking
