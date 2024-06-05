@@ -5,6 +5,8 @@ using Il2CppInterop.Runtime;
 using Refined;
 using Unity.Entities;
 using System.Runtime.InteropServices;
+using ProjectM;
+using Stunlock.Core;
 
 #pragma warning disable CS8500
 internal static class ECSExtensions
@@ -35,6 +37,10 @@ internal static class ECSExtensions
 
 		return *componentDataRawRW;
 	}
+	public static DynamicBuffer<T> ReadBuffer<T>(this Entity entity) where T : struct
+	{
+		return Core.Server.EntityManager.GetBuffer<T>(entity);
+	}
 
 	internal unsafe static T Read<T>(this Entity entity) where T : struct
 	{
@@ -50,19 +56,18 @@ internal static class ECSExtensions
 	}
 	public unsafe static void Write<T>(this Entity entity, T componentData) where T : struct
 	{
-		// Get the ComponentType for T
+		// get the ComponentType for T
 		var ct = new ComponentType(Il2CppType.Of<T>());
 
-		// Marshal the component data to a byte array
+		// marshal the component data to a byte array
 		byte[] byteArray = StructureToByteArray(componentData);
 
-		// Get the size of T
+		// get the size of T
 		int size = Marshal.SizeOf<T>();
 
-		// Create a pointer to the byte array
+		// create a pointer to the byte array
 		fixed (byte* p = byteArray)
 		{
-			// Set the component data
 			Core.EntityManager.SetComponentDataRaw(entity, ct.TypeIndex, p, size);
 		}
 	}
@@ -79,7 +84,7 @@ internal static class ECSExtensions
 		Core.EntityManager.RemoveComponent(entity, ct);
 	}
 
-	// Helper function to marshal a struct to a byte array
+	// helper function to marshal a struct to a byte array
 	public static byte[] StructureToByteArray<T>(T structure) where T : struct
 	{
 		int size = Marshal.SizeOf(structure);
@@ -91,6 +96,38 @@ internal static class ECSExtensions
 		Marshal.FreeHGlobal(ptr);
 
 		return byteArray;
+	}
+	public static string LookupName(this PrefabGUID prefabGuid)
+	{
+		var prefabCollectionSystem = Core.Server.GetExistingSystemManaged<PrefabCollectionSystem>();
+
+		return (prefabCollectionSystem.PrefabGuidToNameDictionary.ContainsKey(prefabGuid)
+				? prefabCollectionSystem.PrefabGuidToNameDictionary[prefabGuid] + " " + prefabGuid : "GUID Not Found").ToString();
+	}
+
+	public static string PrefabName(this PrefabGUID prefabGuid)
+	{
+		var name = Core.LocalizationService.GetPrefabName(prefabGuid);
+
+		return string.IsNullOrEmpty(name) ? prefabGuid.LookupName() : name;
+	}
+
+	public static string EntityName(this Entity entity)
+	{
+		var nameable = entity.Read<NameableInteractable>();
+		var name = nameable.Name.ToString();
+
+		if (string.IsNullOrEmpty(name) && entity.Has<PrefabGUID>())
+		{
+			name = entity.Read<PrefabGUID>().PrefabName();
+		}
+
+		if (string.IsNullOrEmpty(name))
+		{
+			name = entity.ToString();
+		}
+
+		return name;
 	}
 }
 #pragma warning restore CS8500

@@ -10,12 +10,20 @@
     <RootNamespace>Refined</RootNamespace>
     <BepInExPluginGuid>com.deca.Bloodstone</BepInExPluginGuid>
   </PropertyGroup>
+    <ItemGroup>
+    <None Remove="Data\prefabNames.json" />
+    <None Remove="Localization\English.json" />
+  </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.668" IncludeAssets="compile" />
-    <PackageReference Include="BepInEx.Core" Version="6.0.0-be.668" IncludeAssets="compile" />
-    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
-    <PackageReference Include="VRising.Unhollowed.Client" Version="1.0.0.*" />
-    <PackageReference Include="VRising.VampireCommandFramework" Version="0.8.*" />
+    <EmbeddedResource Include="Data\PrefabNames.json" />
+    <EmbeddedResource Include="Localization\English.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.691" IncludeAssets="compile" />
+	<PackageReference Include="BepInEx.Core" Version="6.0.0-be.691" IncludeAssets="compile" />
+	<PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+	<PackageReference Include="VRising.Unhollowed.Client" Version="1.0.2.*" />
+	<PackageReference Include="VRising.VampireCommandFramework" Version="0.9.*" />
     <PackageReference Include="VRising.Bloodstone" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>

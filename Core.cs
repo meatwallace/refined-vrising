@@ -1,14 +1,13 @@
-using System.Runtime.CompilerServices;
 using BepInEx.Logging;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 using ProjectM;
 using ProjectM.Physics;
 using ProjectM.Scripting;
 using Refined.Services;
+using System.Runtime.CompilerServices;
+using System.Collections;
 using Unity.Entities;
 using UnityEngine;
-using BepInEx.Unity.IL2CPP.Utils.Collections;
-using System.Collections;
-using Refined.Patch;
 
 namespace Refined;
 
@@ -27,10 +26,13 @@ internal static class Core
 
 	public static AnnouncerService AnnouncerService { get; internal set; }
 	public static BossService BossService { get; internal set; }
+	public static LocalizationService LocalizationService { get; } = new();
 	public static PlayerService PlayerService { get; internal set; }
 	public static PrefabService PrefabService { get; internal set;  }
 	public static RegionService RegionService { get; internal set; }
 	public static SoulShardService SoulShardService { get; internal set; }
+	public static StashService StashService { get; internal set; }
+	public static TerritoryService TerritoryService { get; internal set; }
 
 	static MonoBehaviour monoBehaviour;
 
@@ -43,7 +45,10 @@ internal static class Core
 
 	internal static void InitializeAfterLoaded()
 	{
-		if (_hasInitialized) return;
+		if (_hasInitialized)
+		{
+			return;
+		}
 
 		PrefabCollectionSystem = Server.GetExistingSystemManaged<PrefabCollectionSystem>();
 		ServerGameSettingsSystem = Server.GetExistingSystemManaged<ServerGameSettingsSystem>();
@@ -56,6 +61,8 @@ internal static class Core
 		PlayerService = new();
 		PrefabService = new();
 		SoulShardService = new();
+		StashService = new();
+		TerritoryService = new();
 
 		Data.Character.Populate();
 		SoulShardService.SetShardDecayRate();

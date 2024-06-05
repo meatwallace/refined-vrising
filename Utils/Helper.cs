@@ -1,4 +1,7 @@
 using Il2CppInterop.Runtime;
+using ProjectM;
+using System;
+using System.Runtime.InteropServices;
 using Unity.Collections;
 using Unity.Entities;
 
@@ -46,5 +49,32 @@ internal static partial class Helper
 
 		var entities = query.ToEntityArray(Allocator.Temp);
 		return entities;
+	}
+
+	public static AddItemSettings GetAddItemSettings()
+	{
+		AddItemSettings addItemSettings = default;
+		addItemSettings.EntityManager = Core.EntityManager;
+		unsafe
+		{
+			// Pin the buffer object to prevent the GC from moving it while we access it via pointers
+			GCHandle handle = GCHandle.Alloc(Core.ServerGameManager.ItemLookupMap, GCHandleType.Pinned);
+			try
+			{
+				// Obtain the actual address of the buffer
+				IntPtr address = handle.AddrOfPinnedObject();
+
+				// Assuming the buckets pointer is the first field in the buffer struct
+				// You may need to adjust the offset depending on the actual memory layout
+				addItemSettings.ItemDataMap = Marshal.ReadIntPtr(address);
+			}
+			finally
+			{
+				if (handle.IsAllocated)
+					handle.Free();
+			}
+		}
+
+		return addItemSettings;
 	}
 }

@@ -13,7 +13,10 @@ public static class UserConnectedHook
 {
 	public static void Postfix(ServerBootstrapSystem __instance, NetConnectionId netConnectionId)
 	{
-		if (Core.PlayerService == null) Core.InitializeAfterLoaded();
+		if (Core.PlayerService == null)
+		{
+			Core.InitializeAfterLoaded();
+		}
 
 		try
 		{
@@ -27,6 +30,7 @@ public static class UserConnectedHook
 			if (!isNewVampire)
 			{
 				var playerName = userData.CharacterName.ToString();
+
 				Core.PlayerService.UpdatePlayerCache(userEntity, playerName, playerName);
 				Core.Logger.LogInfo($"Player {playerName} connected");
 			}

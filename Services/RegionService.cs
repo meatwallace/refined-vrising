@@ -103,6 +103,7 @@ internal class RegionService
 		};
 
 		var json = JsonSerializer.Serialize(regionFile, options);
+
 		File.WriteAllText(REGIONS_PATH, json);
 	}
 
@@ -137,7 +138,7 @@ internal class RegionService
 		{
 			if (lockedRegions.Count == 0)
 			{
-				continue;
+				yield return null;
 			}
 
 			foreach (var userEntity in Core.PlayerService.GetCachedUsersOnline())
@@ -149,7 +150,8 @@ internal class RegionService
 
 				var charName = userEntity.Read<User>().CharacterName.ToString();
 
-				if (String.IsNullOrEmpty(charName)) { 
+				if (string.IsNullOrEmpty(charName))
+				{
 					continue;
 				}
 
@@ -183,8 +185,6 @@ internal class RegionService
 
 	string DisallowedFromRegion(Entity userEntity, WorldRegionType region)
 	{
-		var charName = userEntity.Read<User>().CharacterName.ToString();
-
 		if (lockedRegions.Contains(region))
 		{
 			return $"{region} is currently locked.";
@@ -250,6 +250,11 @@ internal class RegionService
 
 		charEntity.Write(new Translation { Value = returnPos });
 		charEntity.Write(new LastTranslation { Value = returnPos });
+	}
+
+	public WorldRegionType GetRegion(Entity entity)
+	{
+		return GetRegion(entity.Read<Translation>().Value);
 	}
 
 	public WorldRegionType GetRegion(float3 pos)

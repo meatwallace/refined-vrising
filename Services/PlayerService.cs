@@ -30,6 +30,7 @@ internal class PlayerService
 		steamPlayerCache.Clear();
 
 		var userEntities = Helper.GetEntitiesByComponentType<User>(includeDisabled: true);
+
 		foreach (var entity in userEntities)
 		{
 			var userData = Core.EntityManager.GetComponentData<User>(entity);
@@ -39,11 +40,9 @@ internal class PlayerService
 			steamPlayerCache.TryAdd(userData.PlatformId, playerData);
 		}
 
-
 		var onlinePlayers = namePlayerCache.Values.Where(p => p.IsOnline).Select(p => $"\t{p.CharacterName}");
 
-		Core.Logger.LogWarning($"Player Cache Created with {namePlayerCache.Count} entries total, listing {onlinePlayers.Count()} online:");
-		Core.Logger.LogWarning(string.Join("\n", onlinePlayers));
+		Core.Logger.LogWarning($"Player Cache Created with {namePlayerCache.Count} entries total");
 	}
 
 	internal bool RenamePlayer(Entity userEntity, Entity charEntity, FixedString64Bytes newName)

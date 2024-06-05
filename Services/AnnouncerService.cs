@@ -3,10 +3,8 @@ using Bloodstone.API;
 using ProjectM;
 using ProjectM.Network;
 using Refined.Utils;
-using Refined.Patch;
 using Unity.Transforms;
 using System.Collections.Generic;
-using VampireCommandFramework;
 
 namespace Refined.Services;
 internal class AnnouncerService
@@ -46,8 +44,9 @@ internal class AnnouncerService
 	public static void AnnounceServerInfo()
 	{
 		var messages = new List<string> {
-			"If you're new to Refined, join our discord!".Bold(),
-			"https://discord.gg/EC9KEE5U9V".Bold()
+			Markup.Highlight("Welcome to Refined!"),
+			$"Type {Markup.Highlight(".help")} for a list of available commands",
+			$"Join our Discord at {Markup.Highlight("https://discord.gg/EC9KEE5U9V")}",
 		};
 
 		foreach (var message in messages)
@@ -58,12 +57,6 @@ internal class AnnouncerService
 
 	public static void StartAnnounceServerInfo()
 	{
-		static void AutoAnnounceServerInfo()
-		{
-			AnnounceServerInfo();
-			ActionScheduler.RunActionOnceAfterDelay(AutoAnnounceServerInfo, 60 * 15);
-		}
-
-		ActionScheduler.RunActionOnceAfterDelay(AutoAnnounceServerInfo, 60 * 15);
+		ActionScheduler.RunActionEveryInterval(AnnounceServerInfo, 60);
 	}
 }
