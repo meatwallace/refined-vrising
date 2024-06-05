@@ -130,8 +130,16 @@ internal class RegionService
 
 	IEnumerator CheckPlayerRegions()
 	{
+		// my instincts tell me a while loop here is asking for trouble RE: performance. need to understand
+		// how coroutines work & how this interacts with the game loop. truthfully though i'm really not sure
+		// how expensive this position check is, so might be a red herring.
 		while (true)
 		{
+			if (lockedRegions.Count == 0)
+			{
+				continue;
+			}
+
 			foreach (var userEntity in Core.PlayerService.GetCachedUsersOnline())
 			{
 				if (!userEntity.Has<User>() || !userEntity.Has<CurrentWorldRegion>())
