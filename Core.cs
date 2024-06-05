@@ -8,6 +8,7 @@ using Unity.Entities;
 using UnityEngine;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
 using System.Collections;
+using Refined.Patch;
 
 namespace Refined;
 
@@ -58,6 +59,7 @@ internal static class Core
 
 		Data.Character.Populate();
 		SoulShardService.SetShardDecayRate();
+		AnnouncerService.StartAnnounceServerInfo();
 
 		_hasInitialized = true;
 
