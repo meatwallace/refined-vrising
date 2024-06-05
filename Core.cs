@@ -1,11 +1,11 @@
+using System.Collections;
+using System.Runtime.CompilerServices;
 using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
 using ProjectM;
 using ProjectM.Physics;
 using ProjectM.Scripting;
 using Refined.Services;
-using System.Runtime.CompilerServices;
-using System.Collections;
 using Unity.Entities;
 using UnityEngine;
 
@@ -16,6 +16,7 @@ internal static class Core
 	public static World Server { get; } = GetWorld("Server") ?? throw new System.Exception("There is no Server world (yet). Did you install a server mod on the client?");
 
 	public static EntityManager EntityManager { get; } = Server.EntityManager;
+	public static GameDataSystem GameDataSystem { get; } = Server.GetExistingSystemManaged<GameDataSystem>();
 	public static PrefabCollectionSystem PrefabCollectionSystem { get; internal set; }
 	public static ServerScriptMapper ServerScriptMapper { get; internal set; }
 	public static ServerGameManager ServerGameManager => ServerScriptMapper.GetServerGameManager();
@@ -26,9 +27,11 @@ internal static class Core
 
 	public static AnnouncerService AnnouncerService { get; internal set; }
 	public static BossService BossService { get; internal set; }
+	public static GearService GearService { get; internal set; }
 	public static LocalizationService LocalizationService { get; } = new();
+	public static MapService MapService { get; internal set; }
 	public static PlayerService PlayerService { get; internal set; }
-	public static PrefabService PrefabService { get; internal set;  }
+	public static PrefabService PrefabService { get; internal set; }
 	public static RegionService RegionService { get; internal set; }
 	public static SoulShardService SoulShardService { get; internal set; }
 	public static StashService StashService { get; internal set; }
@@ -57,6 +60,8 @@ internal static class Core
 		PlayerService = new();
 		AnnouncerService = new();
 		BossService = new();
+		GearService = new();
+		MapService = new();
 		RegionService = new();
 		PlayerService = new();
 		PrefabService = new();
@@ -65,6 +70,8 @@ internal static class Core
 		TerritoryService = new();
 
 		Data.Character.Populate();
+		//MapService.RevealMapForAllPlayers();
+		GearService.SetHeadgearBloodbound();
 		SoulShardService.SetShardDecayRate();
 		AnnouncerService.StartAnnounceServerInfo();
 

@@ -1,12 +1,12 @@
-using ProjectM;
-using ProjectM.Shared;
-using Stunlock.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using ProjectM;
+using ProjectM.Shared;
+using Stunlock.Core;
 
 namespace Refined.Services
 {

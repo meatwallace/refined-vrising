@@ -4,7 +4,7 @@ using VampireCommandFramework;
 
 namespace Refined.Commands;
 [CommandGroup("boss")]
-internal class BossCommands
+public class BossCommands
 {
 	[Command("lock", "l", description: "Locks the specified boss from spawning.", adminOnly: true)]
 	public static void LockBossCommand(ChatCommandContext ctx, FoundVBlood boss)

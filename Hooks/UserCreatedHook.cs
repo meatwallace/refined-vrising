@@ -1,9 +1,9 @@
 using HarmonyLib;
-using Refined.Data;
 using ProjectM;
 using ProjectM.Network;
-using Unity.Collections;
+using Refined.Data;
 using Stunlock.Core;
+using Unity.Collections;
 
 namespace Refined.Hooks;
 
@@ -35,6 +35,7 @@ public class UserCreatedHook
 				var playerName = __instance.EntityManager.GetComponentData<User>(userEntity).CharacterName.ToString();
 
 				Core.PlayerService.UpdatePlayerCache(userEntity, playerName, playerName);
+				//Core.MapService.RevealMapForPlayer(userEntity);
 
 				Core.Logger.LogInfo($"Player {playerName} created");
 			}

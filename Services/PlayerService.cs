@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Refined.Models;
 using ProjectM;
 using ProjectM.Network;
+using Refined.Models;
+using Refined.Utils;
 using Unity.Collections;
 using Unity.Entities;
-using Refined.Utils;
 
 namespace Refined.Services;
 
@@ -63,7 +63,7 @@ internal class PlayerService
 
 		des.RenameUser(fromCharacter, renameEvent);
 		UpdatePlayerCache(userEntity, userData.CharacterName.ToString(), newName.ToString());
-		
+
 		Core.Logger.LogInfo($"Player {userData.CharacterName} renamed to {newName}");
 
 		return true;

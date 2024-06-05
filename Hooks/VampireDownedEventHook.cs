@@ -72,6 +72,6 @@ public static class VampireDownedEventHook
 
 		var location = victimEntity.Read<LocalToWorld>();
 
-		Core.AnnouncerService.AnnouncePvPKill(killer, victim, location);
+		Services.AnnouncerService.AnnouncePvPKill(killer, victim, location);
 	}
 }

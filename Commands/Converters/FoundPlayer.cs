@@ -17,7 +17,7 @@ public record FoundPlayer(PlayerData Value);
 /// <param name="Value">Contains <see cref="PlayerData"/></param>
 public record OnlinePlayer(PlayerData Value);
 
-internal class FoundPlayerConverter : CommandArgumentConverter<FoundPlayer>
+public class FoundPlayerConverter : CommandArgumentConverter<FoundPlayer>
 {
 	public override FoundPlayer Parse(ICommandContext ctx, string input)
 	{

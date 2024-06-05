@@ -1,15 +1,15 @@
 using System;
+using System.Collections.Generic;
 using Bloodstone.API;
 using ProjectM;
 using ProjectM.Network;
 using Refined.Utils;
 using Unity.Transforms;
-using System.Collections.Generic;
 
 namespace Refined.Services;
 internal class AnnouncerService
 {
-	public void AnnouncePvPKill(PlayerCharacter killer, PlayerCharacter victim, LocalToWorld location)
+	public static void AnnouncePvPKill(PlayerCharacter killer, PlayerCharacter victim, LocalToWorld location)
 	{
 		var victimUser = victim.UserEntity.Read<User>();
 		var victimCharacter = victimUser.LocalCharacter._Entity;
@@ -21,7 +21,7 @@ internal class AnnouncerService
 		var killerCharacter = killerUser.LocalCharacter._Entity;
 		var killerEquipment = killerCharacter.Read<Equipment>();
 		var killerLevel = Math.Round(killerEquipment.GetFullLevel(), 0);
-			
+
 		var killerName = Markup.Highlight(killerUser.CharacterName.ToString());
 
 		// when the killer is this many levels above the victim, treat it as a grief kill
@@ -45,8 +45,8 @@ internal class AnnouncerService
 	{
 		var messages = new List<string> {
 			Markup.Highlight("Welcome to Refined!"),
-			$"Type {Markup.Highlight(".help")} for a list of available commands",
-			$"Join our Discord at {Markup.Highlight("https://discord.gg/EC9KEE5U9V")}",
+			$"Join us at {Markup.Highlight("discord.gg/EC9KEE5U9V")}",
+			$"Type {Markup.Highlight(".?")} for a list of available commands",
 		};
 
 		foreach (var message in messages)
@@ -57,6 +57,12 @@ internal class AnnouncerService
 
 	public static void StartAnnounceServerInfo()
 	{
-		ActionScheduler.RunActionEveryInterval(AnnounceServerInfo, 60);
+		static void AnnounceServerInfoAction()
+		{
+			AnnounceServerInfo();
+			ActionScheduler.RunActionOnceAfterDelay(AnnounceServerInfoAction, 15 * 60);
+		}
+
+		ActionScheduler.RunActionOnceAfterDelay(AnnounceServerInfoAction, 15 * 60);
 	}
 }

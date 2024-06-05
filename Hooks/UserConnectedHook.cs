@@ -2,8 +2,8 @@ using System;
 using HarmonyLib;
 using ProjectM;
 using ProjectM.Network;
-using Stunlock.Network;
 using Refined;
+using Stunlock.Network;
 
 namespace KindredCommands.Patches;
 

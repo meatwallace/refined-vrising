@@ -1,10 +1,10 @@
-using Unity.Entities;
-using ProjectM.Shared;
-using Stunlock.Core;
-using Refined.Data;
-using Unity.Collections;
 using System.Linq;
+using ProjectM.Shared;
+using Refined.Data;
 using Refined.Utils;
+using Stunlock.Core;
+using Unity.Collections;
+using Unity.Entities;
 
 namespace Refined.Services;
 internal class SoulShardService
@@ -16,7 +16,7 @@ internal class SoulShardService
 		Prefabs.Item_MagicSource_SoulShard_Solarus
 	];
 
-	internal static void SetShardDecayRate()
+	internal void SetShardDecayRate()
 	{
 		var soulShards = Helper.GetEntitiesByComponentTypes<Relic, Prefab>(includePrefab: true);
 

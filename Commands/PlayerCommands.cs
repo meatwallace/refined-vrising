@@ -5,7 +5,7 @@ using Unity.Collections;
 using VampireCommandFramework;
 
 namespace Refined.Commands;
-internal class PlayerCommands
+public class PlayerCommands
 {
 	[Command("rename", description: "Rename another player.", adminOnly: true)]
 	public static void RenameOther(ChatCommandContext ctx, FoundPlayer player, NewName newName)

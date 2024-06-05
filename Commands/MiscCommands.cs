@@ -4,18 +4,19 @@ using Refined.Utils;
 using VampireCommandFramework;
 
 namespace Refined.Commands;
-internal static class MiscCommands
+public static class MiscCommands
 {
-	[Command("help", description: "Displays the list of commands.")]
+	[Command("?", description: "Displays the list of commands.")]
 	public static void HelpCommand(ChatCommandContext ctx)
 	{
 		var messages = new List<string> {
-			$"• {Markup.Highlight(".stash")} - Automatically stash all items from inventory into chests when in your castle",
-			$"• {Markup.Highlight(".boss list")} - List the currently locked bosses during gated progression",
-			$"• {Markup.Highlight(".ping")} - Check your latency to the server",
-			$"• {Markup.Highlight(".settings")} - Displays the server settings",
-			$"• {Markup.Highlight(".discord")} - Displays the Refined discord link",
-			$"• {Markup.Highlight(".help")} - Displays the list of commands",
+			$"{Markup.Highlight(".stash")} - Automatically stash all items from inventory into chests when in your castle",
+			$"{Markup.Highlight(".boss list")} - List the currently locked bosses during gated progression",
+			$"{Markup.Highlight(".ping")} - Check your latency to the server",
+			$"{Markup.Highlight(".settings")} - Displays the server settings",
+			$"{Markup.Highlight(".rules")} - Displays the server rules",
+			$"{Markup.Highlight(".discord")} - Displays the Refined discord link",
+			$"{Markup.Highlight(".?")} - Displays the list of commands",
 		};
 
 		foreach (var message in messages)
@@ -41,13 +42,30 @@ internal static class MiscCommands
 		}
 	}
 
+	[Command("rules", description: "Displays the server rules")]
+	public static void RulesCommand(ChatCommandContext ctx)
+	{
+		var messages = new List<string> {
+			"• Banter is fine, but no bigotry",
+			"• 1 heart per player/clan",
+			"• No exploiting",
+			"• No insiding",
+			"• No teaming (details in Discord)",
+		};
+
+		foreach (var message in messages)
+		{
+			ctx.Reply(message);
+		}
+	}
+
 	[Command("discord", description: "Displays the Refined discord link")]
 	public static void DiscordCommand(ChatCommandContext ctx)
 	{
 		ctx.Reply(Markup.Highlight("https://discord.gg/EC9KEE5U9V"));
 	}
 
-	[Command("ping", shortHand: "p", description: "Shows your latency.")]
+	[Command("ping", description: "Shows your latency.")]
 	public static void PingCommand(ChatCommandContext ctx)
 	{
 		var ping = ctx.Event.SenderCharacterEntity.Read<Latency>().Value * 1000;

@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using Il2CppInterop.Runtime;
 using ProjectM;
 using ProjectM.CastleBuilding;
 using ProjectM.Terrain;
-using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
 

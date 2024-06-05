@@ -4,7 +4,7 @@ using VampireCommandFramework;
 namespace Refined.Commands;
 
 [CommandGroup("region")]
-internal class RegionCommands
+public class RegionCommands
 {
 	[Command("lock", "l", description: "Locks the specified region.", adminOnly: true)]
 	public static void LockRegionCommand(ChatCommandContext ctx, FoundRegion region)

@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Refined.Commands.Converters;
-using Refined.Data;
 using ProjectM;
 using ProjectM.Gameplay.Scripting;
 using ProjectM.Shared;
-using Stunlock.Core;
+using Refined.Commands.Converters;
+using Refined.Data;
 using Refined.Utils;
+using Stunlock.Core;
 
 namespace Refined.Services;
 internal class BossService
@@ -82,7 +82,7 @@ internal class BossService
 			lockedBosses.Add(boss);
 
 			RemoveBoss(boss);
-			SaveBosses(); 
+			SaveBosses();
 
 			return true;
 		}
